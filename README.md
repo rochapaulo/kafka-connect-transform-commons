@@ -10,3 +10,15 @@
   CONNECTOR_TRANSFORMS_EXTRACT-TOPIC-NAME_DELIMITER: \\.
 ``` 
 
+```json
+{
+    "header": {
+        "topic": "target-topic-name"
+    },
+    "body": {
+        "name": "Paulo",
+        "surname": "Almeida",
+        "dateOfBirth": "24-10-1990"
+    }
+}
+```
