@@ -1,7 +1,10 @@
 package almeida.paulorocha.kafka.connect.transform.common;
 
+import java.util.Arrays;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @AllArgsConstructor
 abstract class BaseExtractorVisitor<T> {
 
@@ -10,6 +13,7 @@ abstract class BaseExtractorVisitor<T> {
 
   final <R> R extract(T startNode, String nestedNodePath) {
     String[] arr = nestedNodePath.split(delimiter);
+    log.info("Walking through: {}", Arrays.toString(arr));
     return getValue(visit(startNode, arr, 0, arr.length), arr[arr.length - 1]);
   }
 

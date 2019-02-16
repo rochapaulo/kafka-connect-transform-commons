@@ -32,11 +32,12 @@ public class ExtractTopic<R extends ConnectRecord<R>> implements Transformation<
   @SuppressWarnings("unchecked")
   private String extractTopic(R record) {
     final Schema schema = record.valueSchema();
+    log.info("Processing {} type - path=[{}] delimiter=[{}]", schema.type(), config.getValue(), config.getDelimiter());
     switch (schema.type()) {
       case STRUCT:
-        return structValueExtractor.extract((Struct) record.value(), config.getFieldName());
+        return structValueExtractor.extract((Struct) record.value(), config.getValue());
       case MAP:
-        return mapValueExtractor.extract((Map<String, Object>) record.value(), config.getFieldName());
+        return mapValueExtractor.extract((Map<String, Object>) record.value(), config.getValue());
       default:
         throw new UnsupportedOperationException(schema.type() + " is not supported.");
     }

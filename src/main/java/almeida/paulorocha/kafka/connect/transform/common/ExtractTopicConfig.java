@@ -18,14 +18,14 @@ class ExtractTopicConfig extends AbstractConfig {
   public static final String DELIMITER_DOC = "";
 
   @Getter
-  private final String fieldName;
+  private final String value;
 
   @Getter
   private final String delimiter;
 
   ExtractTopicConfig(Map<String, ?> settings) {
     super(config(), settings);
-    fieldName = getString(EXTRACT_VALUE_CONF);
+    value = getString(EXTRACT_VALUE_CONF);
     delimiter = getString(DELIMITER_CONF);
   }
 

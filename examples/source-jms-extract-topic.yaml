@@ -1,0 +1,78 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: activemq-source-connector-configmap
+  namespace: connect
+data:
+  CONNECT_REST_PORT: "8083"
+  CONNECT_GROUP_ID: "activemq-source-connector"
+  CONNECT_STATUS_STORAGE_TOPIC: "activemq-source-connector-statuses"
+  CONNECT_CONFIG_STORAGE_TOPIC: "activemq-source-connector-configs"
+  CONNECT_OFFSET_STORAGE_TOPIC: "activemq-source-connector-offsets"
+  CONNECT_BOOTSTRAP_SERVERS: "broker.kafka.svc.cluster.local:9092"
+  CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+  CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+  CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+  CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+  CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+  CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+  CONNECTOR_CONNECTOR_CLASS: "com.datamountaineer.streamreactor.connect.jms.source.JMSSourceConnector"
+  CONNECTOR_NAME: "jms-source-connector"
+  CONNECTOR_TASKS_MAX: "10"
+  CONNECTOR_CONNECT_JMS_KCQL: "INSERT INTO topic-1 SELECT * FROM topic-1 WITHTYPE QUEUE WITHCONVERTER=`com.datamountaineer.streamreactor.connect.converters.source.JsonSimpleConverter`"
+  CONNECTOR_CONNECT_JMS_INITIAL_CONTEXT_FACTORY: "org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+  CONNECTOR_CONNECT_JMS_URL: "tcp://activemq.default.svc.cluster.local:61616"
+  CONNECTOR_CONNECT_JMS_CONNECTION_FACTORY: "ConnectionFactory"
+  CONNECTOR_TRANSFORMS: "extract-topic-name"
+  CONNECTOR_TRANSFORMS_EXTRACT-TOPIC-NAME_TYPE: "almeida.paulorocha.kafka.connect.transform.common.ExtractTopic"
+  CONNECTOR_TRANSFORMS_EXTRACT-TOPIC-NAME_VALUE: "header.topic"
+  CONNECTOR_TRANSFORMS_EXTRACT-TOPIC-NAME_DELIMITER: \\.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: activemq-source-connector
+  namespace: connect
+spec:
+  clusterIP: None
+  selector:
+    app: activemq-source-connector
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: activemq-source-connector
+  namespace: connect
+spec:
+  selector:
+    matchLabels:
+      app: activemq-source-connector
+  serviceName: "activemq-source-connector"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: activemq-source-connector
+    spec:
+      containers:
+        - name: activemq-source-connector
+          image: eu.gcr.io/rochapaulo/kafka-connect-jms:latest
+          imagePullPolicy: Always
+          ports:
+            - name: "rest"
+              containerPort: 8083
+          livenessProbe:
+            exec:
+              command:
+              - /etc/plugins/bin/liveness.sh
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+          env:
+            - name: CONNECT_REST_ADVERTISED_HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          envFrom:
+          - configMapRef:
+              name: activemq-source-connector-configmap
