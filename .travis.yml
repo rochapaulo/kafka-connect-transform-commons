@@ -1,0 +1,15 @@
+language: java
+jdk:
+  - oraclejdk8
+  - openjdk8
+  - openjdk10
+  - openjdk11
+cache:
+  directories:
+    - $HOME/.m2/repository
+install:
+  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -V
+script:
+  mvn test
+after_success:
+  - mvn clean
