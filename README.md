@@ -9,6 +9,7 @@
   CONNECTOR_TRANSFORMS_DECODE-BASE64_TYPE: "almeida.paulorocha.kafka.connect.transform.common.DecodeBase64"
 ```
   
+### ExtractTopic
 ```yaml
   CONNECTOR_TRANSFORMS: "extract-topic-name"
   CONNECTOR_TRANSFORMS_EXTRACT-TOPIC-NAME_TYPE: "almeida.paulorocha.kafka.connect.transform.common.ExtractTopic"
