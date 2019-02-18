@@ -1,7 +1,6 @@
 # kafka-connect-transform-common
 ---
-[![Build Status](https://travis-ci.org/rochapaulo/kafka-connect-transform-common.svg?branch=master)](https://travis-ci.org/rochapaulo/kafka-connect-transform-common)
-
+[![Build Status](https://travis-ci.org/rochapaulo/kafka-connect-transform-commons.svg?branch=master)](https://travis-ci.org/rochapaulo/kafka-connect-transform-commons)
 
 
 ### Bytes2String (encoding: UTF-8)
