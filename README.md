@@ -4,6 +4,14 @@
 
 
 
+### Bytes2String (encoding: UTF-8)
+```yaml
+  CONNECTOR_TRANSFORMS: "bytes-to-string"
+  CONNECTOR_TRANSFORMS_BYTES-TO-STRING_TYPE: "almeida.paulorocha.kafka.connect.transform.common.Bytes2String"
+```
+
+------
+
 ### ExtractTopic
 - Sample configuration:
 ```yaml

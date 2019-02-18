@@ -1,11 +1,12 @@
 package almeida.paulorocha.kafka.connect.transform.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.connect.data.Schema.Type;
 import org.apache.kafka.connect.data.SchemaBuilder;
-import org.apache.kafka.connect.sink.SinkRecord;
+import org.apache.kafka.connect.source.SourceRecord;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,40 +25,36 @@ public class ExtractTopicTest {
     ObjectMapper objectMapper = new ObjectMapper();
     HashMap<String, Object> map = objectMapper.readValue(TestingData.COMPLEX_JSON, HashMap.class);
 
-    SinkRecord record = new SinkRecord(
+    SourceRecord record = new SourceRecord(
+        Collections.emptyMap(),
+        Collections.emptyMap(),
         "topic",
-        1,
-        null,
-        null,
         SchemaBuilder.type(Type.MAP).build(),
-        map,
-        1L
+        map
     );
 
-    ExtractTopic<SinkRecord> extractTopic = new ExtractTopic<>();
+    ExtractTopic<SourceRecord> extractTopic = new ExtractTopic<>();
     extractTopic.configure(SETTINGS);
 
-    SinkRecord transformedRecord = extractTopic.apply(record);
+    SourceRecord transformedRecord = extractTopic.apply(record);
     Assert.assertEquals("kafka-topic", transformedRecord.topic());
   }
 
   @Test
   public void extractFromStructType() {
 
-    SinkRecord record = new SinkRecord(
+    SourceRecord record = new SourceRecord(
+        Collections.emptyMap(),
+        Collections.emptyMap(),
         "topic",
-        1,
-        null,
-        null,
         TestingData.COMPLEX_JSON_SCHEMA,
-        TestingData.COMPLEX_STRUCT,
-        1L
+        TestingData.COMPLEX_STRUCT
     );
 
-    ExtractTopic<SinkRecord> extractTopic = new ExtractTopic<>();
+    ExtractTopic<SourceRecord> extractTopic = new ExtractTopic<>();
     extractTopic.configure(SETTINGS);
 
-    SinkRecord transformedRecord = extractTopic.apply(record);
+    SourceRecord transformedRecord = extractTopic.apply(record);
     Assert.assertEquals("kafka-topic", transformedRecord.topic());
   }
 
