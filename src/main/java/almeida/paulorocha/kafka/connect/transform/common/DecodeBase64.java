@@ -17,17 +17,18 @@ package almeida.paulorocha.kafka.connect.transform.common;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import javax.xml.bind.DatatypeConverter;
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.connect.connector.ConnectRecord;
 import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.transforms.Transformation;
 
-public class Bytes2String<R extends ConnectRecord<R>> implements Transformation<R> {
+public class DecodeBase64<R extends ConnectRecord<R>> implements Transformation<R> {
 
   @Override
   public R apply(R record) {
 
-    if (!Schema.BYTES_SCHEMA.equals(record.valueSchema())) {
+    if (!Schema.STRING_SCHEMA.equals(record.valueSchema())) {
       throw new UnsupportedOperationException();
     }
 
@@ -37,7 +38,7 @@ public class Bytes2String<R extends ConnectRecord<R>> implements Transformation<
         record.keySchema(),
         record.key(),
         Schema.STRING_SCHEMA,
-        new String((byte[]) record.value(), StandardCharsets.UTF_8),
+        new String(DatatypeConverter.parseBase64Binary((String) record.value()), StandardCharsets.UTF_8),
         record.timestamp());
   }
 

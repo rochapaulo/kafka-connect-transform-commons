@@ -3,16 +3,12 @@
 [![Build Status](https://travis-ci.org/rochapaulo/kafka-connect-transform-commons.svg?branch=master)](https://travis-ci.org/rochapaulo/kafka-connect-transform-commons)
 
 
-### Bytes2String (encoding: UTF-8)
+### DecodeBase64 (encoding: UTF-8)
 ```yaml
-  CONNECTOR_TRANSFORMS: "bytes-to-string"
-  CONNECTOR_TRANSFORMS_BYTES-TO-STRING_TYPE: "almeida.paulorocha.kafka.connect.transform.common.Bytes2String"
+  CONNECTOR_TRANSFORMS: "code-base64"
+  CONNECTOR_TRANSFORMS_DECODE-BASE64_TYPE: "almeida.paulorocha.kafka.connect.transform.common.DecodeBase64"
 ```
-
-------
-
-### ExtractTopic
-- Sample configuration:
+  
 ```yaml
   CONNECTOR_TRANSFORMS: "extract-topic-name"
   CONNECTOR_TRANSFORMS_EXTRACT-TOPIC-NAME_TYPE: "almeida.paulorocha.kafka.connect.transform.common.ExtractTopic"
