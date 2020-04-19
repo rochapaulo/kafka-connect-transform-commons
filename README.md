@@ -43,6 +43,6 @@ Mappings File:
   {
     "from": "in-2",
     "to": "out-2"
-  } ...
+  }
 ]
 ```
