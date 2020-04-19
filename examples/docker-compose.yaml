@@ -41,3 +41,13 @@ services:
     depends_on:
       - zookeeper
       - kafka
+  publish-events:
+    build: ./populate
+    environment:
+      KAFKA_BROKER: kafka:19092
+      SCHEMA_REGISTRY_URL: http://kafka-schema-registry:8081
+    volumes:
+      - ./data/:/tmp/data
+    depends_on:
+      - kafka
+      - kafka-schema-registry
