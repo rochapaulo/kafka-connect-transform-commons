@@ -1,4 +1,4 @@
-package almeida.paulorocha.kafka.connect.transform.common;
+package almeida.paulorocha.kafka.connect.transform.extracttopic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;

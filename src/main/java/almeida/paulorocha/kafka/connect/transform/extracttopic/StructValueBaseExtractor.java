@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package almeida.paulorocha.kafka.connect.transform.common;
+package almeida.paulorocha.kafka.connect.transform.extracttopic;
 
-import java.util.Map;
+import org.apache.kafka.connect.data.Struct;
 
 @SuppressWarnings("unchecked")
-class MapValueBaseExtractor extends BaseExtractorVisitor<Map<String, Object>> {
+class StructValueBaseExtractor extends BaseExtractorVisitor<Struct> {
 
-  MapValueBaseExtractor(String delimiter) {
-    super(delimiter, (node, field) -> (Map<String, Object>) node.get(field));
+  StructValueBaseExtractor(String delimiter) {
+    super(delimiter, (node, field) -> (Struct) node.get(field));
   }
 
   @Override
-  <T> T getValue(Map<String, Object> node, String field) throws ClassCastException {
+  <T> T getValue(Struct node, String field) throws ClassCastException {
     return (T) node.get(field);
   }
 

@@ -1,4 +1,4 @@
-package almeida.paulorocha.kafka.connect.transform.common;
+package almeida.paulorocha.kafka.connect.transform.extracttopic;
 
 import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.data.SchemaBuilder;

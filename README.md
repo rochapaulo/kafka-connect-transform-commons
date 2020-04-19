@@ -5,7 +5,7 @@
 ### ExtractTopic
 ```yaml
   CONNECTOR_TRANSFORMS: "extract-topic-name"
-  CONNECTOR_TRANSFORMS_EXTRACT-TOPIC-NAME_TYPE: "almeida.paulorocha.kafka.connect.transform.common.ExtractTopic"
+  CONNECTOR_TRANSFORMS_EXTRACT-TOPIC-NAME_TYPE: aalmeida.paulorocha.kafka.connect.transform.common.field2header.ExtractTopicExtractTopic
   CONNECTOR_TRANSFORMS_EXTRACT-TOPIC-NAME_VALUE: "header.topic"
   CONNECTOR_TRANSFORMS_EXTRACT-TOPIC-NAME_DELIMITER: \\.
 ``` 
