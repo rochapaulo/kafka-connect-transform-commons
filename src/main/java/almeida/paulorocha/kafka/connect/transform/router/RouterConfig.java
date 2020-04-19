@@ -12,7 +12,7 @@ import java.util.Map;
 @Slf4j
 public class RouterConfig extends AbstractConfig {
 
-    static final  String MAPPING_CONFIG_FILE_CONF = "";
+    static final  String MAPPING_CONFIG_FILE_CONF = "mappings-file-path";
     static final  String MAPPING_CONFIG_FILE_DOC= "";
 
     @Getter
